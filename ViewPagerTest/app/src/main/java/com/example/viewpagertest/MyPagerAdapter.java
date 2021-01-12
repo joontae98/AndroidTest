@@ -25,11 +25,18 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return FirstFragment.newInstance(0, "Page # 1");
+                // 인자 없이 인스턴스로 fragment 호출 코드
+                FirstFragment f = new FirstFragment();
+                return f;
+//                return FirstFragment.newInstance(0, "Page # 1");
             case 1:
-                return SecondFragment.newInstance(1, "Page # 2");
+                SecondFragment s = new SecondFragment();
+                return s;
+//                return SecondFragment.newInstance(1, "Page # 2");
             case 2:
-                return ThirdFragment.newInstance(2, "Page # 3");
+                ThirdFragment t = new ThirdFragment();
+                return t;
+//                return ThirdFragment.newInstance(2, "Page # 3");
             default:
                 return null;
         }

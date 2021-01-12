@@ -31,8 +31,8 @@ public class SecondFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        page = getArguments().getInt("someInt", 0);
-        title = getArguments().getString("someTitle");
+//        page = getArguments().getInt("someInt", 0);
+//        title = getArguments().getString("someTitle");
 
     }
 
