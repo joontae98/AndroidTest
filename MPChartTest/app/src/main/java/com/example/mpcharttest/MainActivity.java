@@ -8,8 +8,10 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.charts.RadarChart;
+
 public class MainActivity extends AppCompatActivity {
-    Button btnBarChart, btnLineChart, btnPieChart;
+    Button btnBarChart, btnLineChart, btnPieChart, btnRadarChart;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         btnBarChart = (Button) findViewById(R.id.btn_main_barChart);
         btnLineChart = (Button) findViewById(R.id.btn_main_lineChart);
         btnPieChart = (Button) findViewById(R.id.btn_main_pieChart);
+        btnRadarChart = (Button) findViewById(R.id.btn_main_radarChart);
 
         btnBarChart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PieChartActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnRadarChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RadarChartActivity.class);
+//                Intent intent = new Intent(MainActivity.this, TestActivity.class);
                 startActivity(intent);
             }
         });

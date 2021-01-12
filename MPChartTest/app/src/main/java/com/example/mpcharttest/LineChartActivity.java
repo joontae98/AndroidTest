@@ -56,8 +56,8 @@ public class LineChartActivity extends AppCompatActivity {
         l.setTextColor(Color.BLACK);
 
         XAxis xl = lineChart.getXAxis();
-        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xl.setGranularity(1f);     //데이터끼리의 간격
+        xl.setPosition(XAxis.XAxisPosition.BOTTOM); //x축의 값 밑에 출력
+        xl.setGranularity(1f);     //축의 최소 간격
         xl.setTextColor(Color.BLACK);
         xl.setDrawGridLines(false);
         xl.setDrawAxisLine(false);

@@ -11,5 +11,6 @@
     <color name="weight">#DD713C</color>
     <color name="sleep_gray">#E6E6E6</color>
     <color name="sleep">#b35b99</color>
+    <color name="total">#A1A2FF</color>
 
 </resources>

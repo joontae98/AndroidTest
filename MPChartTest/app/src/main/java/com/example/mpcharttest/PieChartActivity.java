@@ -6,12 +6,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +39,10 @@ public class PieChartActivity extends AppCompatActivity {
         pieChart.setTransparentCircleRadius(55f);       // 투명한 원반경 함수
         pieChart.setRotationEnabled(false);
         pieChart.setDrawSlicesUnderHole(false);
+        int clock = (930 - 750) / 60;
+        int time = (930 - 750) % 60;
+        pieChart.setCenterText(clock + "시간 " + time + "분");
+        pieChart.setCenterTextSize(30f);
 
         List<PieEntry> yValues = new ArrayList<>();
 
@@ -49,9 +50,9 @@ public class PieChartActivity extends AppCompatActivity {
 
         colors.add(getResources().getColor(R.color.sleep_gray));
         colors.add(getResources().getColor(R.color.sleep));
-        yValues.add(new PieEntry(750,""));
-        yValues.add(new PieEntry(930-750,"자는중"));
-        yValues.add(new PieEntry(1440-930,""));
+        yValues.add(new PieEntry(750, ""));
+        yValues.add(new PieEntry(930 - 750, "자는중"));
+        yValues.add(new PieEntry(1440 - 930, ""));
 
         PieDataSet dataSet = new PieDataSet(yValues, "");
         dataSet.setSliceSpace(0);
