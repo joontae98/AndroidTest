@@ -11,5 +11,5 @@
 3. data 초기화
 
 ## BarChart
-    (barSpace + barWidth) * 5 + groupSpace = 1  
+    (barSpace + barWidth) * (barCount) + groupSpace = 1  
 위 조건을 만족하지 못하면 groupBar lable이 자리를 못 찾음
