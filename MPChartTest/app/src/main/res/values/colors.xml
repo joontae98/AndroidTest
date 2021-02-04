@@ -12,5 +12,7 @@
     <color name="sleep_gray">#E6E6E6</color>
     <color name="sleep">#b35b99</color>
     <color name="total">#A1A2FF</color>
+    <color name="bottle">#6268be</color>
+    <color name="milk">#8bbb4b</color>
 
 </resources>

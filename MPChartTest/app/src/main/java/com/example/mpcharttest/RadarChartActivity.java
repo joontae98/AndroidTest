@@ -3,6 +3,7 @@ package com.example.mpcharttest;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,6 +85,7 @@ public class RadarChartActivity extends AppCompatActivity {
 
             @Override
             public String getFormattedValue(float value) {
+                Log.e("value tag", String.valueOf(value));
                 return mActivities[(int) value % mActivities.length];
             }
         });

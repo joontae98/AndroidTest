@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/btn_sample_bottleChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BottleChart"/>
+
+    <Button
+        android:id="@+id/btn_sample_tempChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TempChart"/>
+    <Button
+        android:id="@+id/btn_sample_sleepChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SleepChart"/>
+
+    <Button
+        android:id="@+id/btn_sample_nappyChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NappyChart"/>
+
+    <Button
+        android:id="@+id/btn_sample_physicalChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PhysicalChart"/>
+
+</LinearLayout>
