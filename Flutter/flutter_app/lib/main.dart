@@ -114,19 +114,12 @@ class Counter with ChangeNotifier, DiagnosticableTreeMixin {
 
   void increment() {
     _count++;
-    notifyListeners();
+    notifyListeners(); // 호출하면 ui에 알려줘서 값이 변경됨
   }
 
   void decrement() {
     _count--;
     notifyListeners();
-  }
-
-  /// Makes `Counter` readable inside the devtools by listing all of its properties
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(IntProperty('count', count));
   }
 }
 
@@ -146,6 +139,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Counter counter = Provider.of<Counter>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Example'),
@@ -154,7 +148,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             Text('You have pushed the button this many times:'),
 
             /// Extracted as a separate widget for performance optimization.
@@ -162,7 +156,10 @@ class MyHomePage extends StatelessWidget {
             ///
             /// This is totally optional (and rarely needed).
             /// Similarly, we could also use [Consumer] or [Selector].
-            Count(),
+            Text(
+              '${counter.count}',
+              style: Theme.of(context).textTheme.headline4,
+            ),
           ],
         ),
       ),
@@ -174,7 +171,7 @@ class MyHomePage extends StatelessWidget {
 
             /// Calls `context.read` instead of `context.watch` so that it does not rebuild
             /// when [Counter] changes.
-            onPressed: () => context.read<Counter>().increment(),
+            onPressed: () => counter.increment(),
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
@@ -186,26 +183,12 @@ class MyHomePage extends StatelessWidget {
 
             /// Calls `context.read` instead of `context.watch` so that it does not rebuild
             /// when [Counter] changes.
-            onPressed: () => context.read<Counter>().decrement(),
+            onPressed: () => counter.decrement(),
             tooltip: 'Decrement',
             child: const Icon(Icons.remove),
           ),
         ],
       ),
     );
-  }
-}
-
-class Count extends StatelessWidget {
-  const Count({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-
-        /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
-        '${context.watch<Counter>().count}',
-        key: const Key('counterState'),
-        style: Theme.of(context).textTheme.headline4);
   }
 }
