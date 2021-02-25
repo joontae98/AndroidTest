@@ -13,12 +13,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mpcharttest.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.ChartData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
@@ -51,55 +55,10 @@ public class Bottle_total extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottlechart);
-
-        mChart = (BarChart) findViewById(R.id.bottleChart);
-        mChart.getAxisRight().setEnabled(true);
-        mChart.setScaleEnabled(false);
-        mChart.setEnabled(true);
-        mChart.setTouchEnabled(true);
-        mChart.setDrawValueAboveBar(true);
-        mChart.getDescription().setEnabled(false);
-
-        XAxis xl = mChart.getXAxis();
-        xl.setDrawAxisLine(false);
-        xl.setDrawGridLines(false);
-        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xl.setCenterAxisLabels(true);
-        xl.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                if (value < 0) {
-                    return "err";
-                }
-                return date.get(Math.round(value) % date.size());
-            }
-        });
-
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setValueFormatter(new LargeValueFormatter());
-        leftAxis.setAxisMaximum(1800f);
-        leftAxis.setAxisMinimum(0f);
-        leftAxis.setDrawLabels(false);
-        leftAxis.setDrawAxisLine(false);
-        leftAxis.setDrawGridLines(true);
-
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setValueFormatter(new LargeValueFormatter());
-        rightAxis.setAxisMaximum(200f);
-        rightAxis.setAxisMinimum(0f);
-        rightAxis.setDrawLabels(false);
-        rightAxis.setDrawAxisLine(false);
-        rightAxis.setDrawGridLines(false);
-
-        Legend le = mChart.getLegend();
-        le.setForm(Legend.LegendForm.SQUARE);
-        le.setFormSize(12f);
-        le.setTextSize(13f);
-        le.setXEntrySpace(10f);
         Log.e(TAG,"setBarchart_data before");
-
         setBarchart_data();
         Log.e(TAG,"setBarchart_data after");
+
 
     }
 
@@ -109,7 +68,7 @@ public class Bottle_total extends AppCompatActivity {
         float barWidth = 0.3f;
 
         Log.e(TAG,"setBarchart_data");
-        String address = "http://45.249.161.202:3232/process/getBottleData";
+        String address = "http://192.168.0.113:3232/process/getBottleData";
         StringRequest request = new StringRequest(Request.Method.POST, address,
                 new Response.Listener<String>() {
                     @Override
@@ -120,6 +79,7 @@ public class Bottle_total extends AppCompatActivity {
                             JSONArray jarr = new JSONArray(response);
 
                             int data_size = jarr.length();
+                            Log.e(TAG, "data_size " + String.valueOf(data_size));
 
                             total_drink = 0;
                             total_milk = 0;
@@ -136,7 +96,7 @@ public class Bottle_total extends AppCompatActivity {
 
                             int z = 0;
                             for (int i = data_size - 1; i >= 0; i--) {
-
+                                Log.e(TAG, "i = "+ String.valueOf(i));
                                 JSONObject order = jarr.getJSONObject(z);           //json 파일의 첫번째 객체를 배열의 마지막에 대입 why - getBottleData 에서 시간 내림차순으로 리턴하게끔 설정
                                 drink[i] = Integer.parseInt(order.getString("drink"));
                                 milk[i] = Integer.parseInt(order.getString("milk"));
@@ -169,7 +129,7 @@ public class Bottle_total extends AppCompatActivity {
                                 day_count = 1;
 
                                 for (int j = 1; j < data_size; j++) {
-
+                                    Log.e(TAG, "j = "+ String.valueOf(j));
                                     day_drink = day_drink + drink[j - 1];
                                     day_milk = day_milk + milk[j - 1];
 
@@ -206,6 +166,56 @@ public class Bottle_total extends AppCompatActivity {
                                     }
                                 }
                             }
+                            mChart = (BarChart) findViewById(R.id.bottleChart);
+                            mChart.getAxisRight().setEnabled(true);
+                            mChart.setScaleEnabled(false);
+                            mChart.setEnabled(true);
+                            mChart.setTouchEnabled(true);
+                            mChart.setDrawValueAboveBar(true);
+                            mChart.getDescription().setEnabled(false);
+
+
+                            XAxis xl = mChart.getXAxis();
+//                            xl.setGranularity(0);
+                            xl.setDrawAxisLine(false);
+                            xl.setDrawGridLines(false);
+                            xl.setPosition(XAxis.XAxisPosition.BOTTOM);
+                            xl.setCenterAxisLabels(true);
+                            xl.setLabelCount(1);
+//                            xl.setValueFormatter(new ValueFormatter() {
+//                                @Override
+//                                public String getFormattedValue(float value) {
+//                                    Log.e(TAG, String.valueOf(value));
+//                                    if (value < 0) {
+//                                        return "err";
+//                                    }
+//                                    Log.e(TAG, "data "+String.valueOf(date));
+//                                    Log.e(TAG, "date.size "+String.valueOf(date.size()));
+//                                    return date.get(Math.round(value/2) % date.size());
+//                                }
+//                            });
+
+                            YAxis leftAxis = mChart.getAxisLeft();
+                            leftAxis.setValueFormatter(new LargeValueFormatter());
+                            leftAxis.setAxisMaximum(1800f);
+                            leftAxis.setAxisMinimum(0f);
+                            leftAxis.setDrawLabels(false);
+                            leftAxis.setDrawAxisLine(false);
+                            leftAxis.setDrawGridLines(true);
+
+                            YAxis rightAxis = mChart.getAxisRight();
+                            rightAxis.setValueFormatter(new LargeValueFormatter());
+                            rightAxis.setAxisMaximum(200f);
+                            rightAxis.setAxisMinimum(0f);
+                            rightAxis.setDrawLabels(false);
+                            rightAxis.setDrawAxisLine(false);
+                            rightAxis.setDrawGridLines(false);
+
+                            Legend le = mChart.getLegend();
+                            le.setForm(Legend.LegendForm.SQUARE);
+                            le.setFormSize(12f);
+                            le.setTextSize(13f);
+                            le.setXEntrySpace(10f);
 
                             BarDataSet set1, set2;
 
@@ -236,11 +246,12 @@ public class Bottle_total extends AppCompatActivity {
                             mChart.setData(data);
 
                             mChart.getXAxis().setAxisMinimum(0);                        //x축의 시작지점
-                            mChart.getXAxis().setAxisMaximum(yVals1.size());            //y축의 시작지점
+                            mChart.getXAxis().setAxisMaximum(yVals2.size());            //y축의 시작지점
 
-                            mChart.groupBars(0, groupSpace, barSpace);
+                            mChart.groupBars(0f, groupSpace, barSpace);
+                            // 범위를 준다  앞의 숫자는 date.size 로 하고 6미만이면 6이상부터는 6으로 고정한다
                             mChart.setVisibleXRange(6f, 6f);
-                            mChart.moveViewToX(data.getEntryCount() - 5);   //21.01.26 마지막데이터를 제일 오른쪽에 출력하도록 수정
+                            mChart.moveViewToX(data.getEntryCount() - 5);   // 2021. 01. 26 마지막데이터를 제일 오른쪽에 출력하도록 수정
                             mChart.animateY(500);
                             mChart.invalidate();
 
@@ -260,8 +271,8 @@ public class Bottle_total extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("identi", "pjt2066@naver.com");
-                params.put("babyname", "박준태");
+                params.put("identi", "1@1.1");
+                params.put("babyname", "나");
                 return params;
             }
         };
