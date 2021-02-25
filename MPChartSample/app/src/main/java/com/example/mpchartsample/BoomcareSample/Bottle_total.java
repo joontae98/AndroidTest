@@ -13,12 +13,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mpchartsample.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 
 import org.json.JSONArray;
@@ -177,18 +179,7 @@ public class Bottle_total extends AppCompatActivity {
                             xl.setPosition(XAxis.XAxisPosition.BOTTOM);
                             xl.setCenterAxisLabels(true);
                             xl.setLabelCount(1);
-//                            xl.setValueFormatter(new ValueFormatter() {
-//                                @Override
-//                                public String getFormattedValue(float value) {
-//                                    Log.e(TAG, String.valueOf(value));
-//                                    if (value < 0) {
-//                                        return "err";
-//                                    }
-//                                    Log.e(TAG, "data "+String.valueOf(date));
-//                                    Log.e(TAG, "date.size "+String.valueOf(date.size()));
-//                                    return date.get(Math.round(value/2) % date.size());
-//                                }
-//                            });
+                            xl.setValueFormatter(new LabelFormatter(date));
 
                             YAxis leftAxis = mChart.getAxisLeft();
                             leftAxis.setValueFormatter(new LargeValueFormatter());
@@ -286,4 +277,23 @@ public class Bottle_total extends AppCompatActivity {
     public void onResume() {
         super.onResume();
     }
+    public class LabelFormatter implements IAxisValueFormatter {
+        private final ArrayList<String> mLabels;
+
+        public LabelFormatter(ArrayList<String> labels) {
+            mLabels = labels;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            if (value < 0){
+                Log.e("err",String.valueOf(value)+"end");
+                return "err";
+
+            }
+            Log.e("value tag",String.valueOf(value)+"end");
+            return mLabels.get(Math.round(value)%date.size());
+        }
+    }
+
 }
