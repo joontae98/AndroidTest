@@ -255,7 +255,7 @@ public class Bottle_total extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("identi", "1@1.1");
-                params.put("babyname", "6");
+                params.put("babyname", "1");
                 return params;
             }
         };

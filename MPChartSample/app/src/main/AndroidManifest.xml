@@ -29,6 +29,7 @@
         <activity android:name=".BoomcareSample.Nappy_total"/>
         <activity android:name=".BoomcareSample.Physical_check"/>
         <activity android:name=".BoomcareSample.Thermo_total"/>
+        <activity android:name=".BoomcareSample.Thermo_day"/>
     </application>
 
 </manifest>

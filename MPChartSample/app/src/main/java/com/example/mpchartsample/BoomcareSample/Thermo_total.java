@@ -2,11 +2,9 @@
 package com.example.mpchartsample.BoomcareSample;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
@@ -16,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mpchartsample.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,7 +23,8 @@ import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -33,7 +33,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Thermo_total extends AppCompatActivity {
@@ -41,14 +40,7 @@ public class Thermo_total extends AppCompatActivity {
     String TAG = "Thermo_total";
 
     private LineChart mChart;
-    TextView avg_temp;
-
-    String main_name;
-    TextView high_temp;
-    TextView low_temp;
-    TextView count_temp;
-
-    Typeface tfs;
+    private ArrayList<String> date = new ArrayList<>();
 
     ArrayList<HashMap<String, String>> GroupMap;
     HashMap<String, String> ChildMap;
@@ -57,34 +49,24 @@ public class Thermo_total extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temptotalchart);
+        mChart = (LineChart) findViewById(R.id.tempTotalChart);
+        chartSetting();
 
+    }
 
-        mChart = (LineChart) findViewById(R.id.tempChart);
+    private void chartSetting() {
 
-        // no description text
         mChart.getDescription().setEnabled(false);
-
-        // enable touch gestures
+        mChart.setNoDataText("");
         mChart.setTouchEnabled(true);
-
-        // enable scaling and dragging
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(false);
         mChart.setDrawGridBackground(false);
-
-        // if disabled, scaling can be done on x- and y-axis separately
         mChart.setPinchZoom(true);
-        //mChart.setAutoScaleMinMaxEnabled(true);
-
-        // set an alternative background color
         mChart.setBackgroundColor(Color.TRANSPARENT);
 
-        LineData data = new LineData();
+        addEntry();
 
-        // add empty data
-        mChart.setData(data);
-
-        // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
         l.setForm(LegendForm.CIRCLE);
         l.setTextColor(Color.BLACK);
@@ -93,14 +75,14 @@ public class Thermo_total extends AppCompatActivity {
         xl.setTextColor(Color.BLACK);
         xl.setDrawGridLines(false);
         xl.setDrawAxisLine(false);
-        xl.setTypeface(tfs);
-
+        xl.setValueFormatter(new LabelFormatter(date));
+//        xl.setGranularityEnabled(true);
+//        xl.setLabelCount(date.size());
 
         YAxis leftAxis = mChart.getAxisLeft();
-//        leftAxis.setTypeface(tf);
         leftAxis.setTextColor(Color.TRANSPARENT);
-        leftAxis.setAxisMaxValue(42f);
-        leftAxis.setAxisMinValue(35f);
+        leftAxis.setAxisMaximum(42f);
+        leftAxis.setAxisMinimum(35f);
         leftAxis.setDrawGridLines(false);
         leftAxis.setDrawAxisLine(false);
         leftAxis.setEnabled(true);
@@ -110,67 +92,83 @@ public class Thermo_total extends AppCompatActivity {
         rightAxis.setDrawAxisLine(false);
         rightAxis.setEnabled(false);
 
-
-        addEntry();
-
     }
 
-    public void addEntry(){
+    public void addEntry() {
         GroupMap = new ArrayList<>();
         String address = "http://192.168.0.113:3232/process/getTempData";
         StringRequest request = new StringRequest(Request.Method.POST, address,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         try {
                             Log.e(TAG, "onResponse(getTempData) 호출됨 :" + response);
 
                             JSONArray jarr = new JSONArray(response);
 
                             int count = jarr.length();
+                            ArrayList<Entry> tempData = new ArrayList<Entry>();
 
-                            if (count>0) {
+                            if (count > 0) {
 
-                                LineData data = mChart.getData();
+                                String[] time = new String[count];
+                                float[] temp = new float[count];
 
-                                if (data != null) {
-                                    ILineDataSet set = data.getDataSetByIndex(0);
-                                    // set.addEntry(...); // can be called as well
+                                for (int i = 0; i < count; i++) {
 
-                                    if (set == null) {
-                                        set = createSet();
-                                        data.addDataSet(set);
-                                    }
-                                    String[] Xvalue = new String[count];
-                                    float[] Yvalue = new float[count];
+                                    ChildMap = new HashMap<String, String>();
+                                    JSONObject order = jarr.getJSONObject(i);
+                                    ChildMap.put("babyOID", order.getString("babyOID"));
+                                    ChildMap.put("time", order.getString("time"));
+                                    ChildMap.put("temp", order.getString("temp"));
+                                    GroupMap.add(ChildMap);
 
-                                    for (int i = 0; i < count; i++) {
-
-                                        ChildMap = new HashMap<String, String>();
-                                        JSONObject order = jarr.getJSONObject(i);
-                                        ChildMap.put("babyOID",order.getString("babyOID"));
-                                        ChildMap.put("time",order.getString("time"));
-                                        ChildMap.put("temp",order.getString("temp"));
-                                        GroupMap.add(ChildMap);
-
-
-
-                                    }
-
-                                    for (int i = count-1; i >= 0; i--) {
-                                        JSONObject order = jarr.getJSONObject(i);
-
-                                        Xvalue[i] = order.getString("time").substring(6,8) +"/"+order.getString("time").substring(10,12);
-                                        Yvalue[i] = Float.parseFloat(order.getString("temp"));
-
-//                                        data.addXValue(Xvalue[i]);              // x축의 값 정하는 부분인거 같음
-                                        data.addEntry(new Entry((Yvalue[i]), set.getEntryCount()), 0);
-
-                                    }
-                                    mChart.notifyDataSetChanged();
-                                    mChart.setVisibleXRangeMaximum(5);
-//                                    mChart.moveViewToX(data.getXValCount() - 6);
                                 }
+
+                                int setInt = 0;
+                                for (int i = count - 1; i >= 0; i--) {
+                                    JSONObject order = jarr.getJSONObject(i);
+
+                                    time[i] = order.getString("time").substring(6, 8) + "/" + order.getString("time").substring(10, 12); // date에 저장하고 formatter로  출력
+                                    temp[i] = Float.parseFloat(order.getString("temp"));
+                                    tempData.add(new Entry(setInt, temp[i]));
+
+                                    date.add(time[i]);
+                                    setInt++;
+                                }
+
+                                LineDataSet set = new LineDataSet(tempData, "온도");
+                                set.setAxisDependency(AxisDependency.LEFT);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    set.setCircleColor(getColor(R.color.temp));
+                                    set.setColor(getColor(R.color.temp));
+                                } else {
+                                    set.setCircleColor(getResources().getColor(R.color.temp));
+                                    set.setColor(getResources().getColor(R.color.temp));
+                                }
+
+                                set.setLineWidth(2f);
+                                set.setCircleRadius(4f);
+                                set.setFillAlpha(65);
+                                set.setFillColor(ColorTemplate.getHoloBlue());
+                                set.setHighLightColor(Color.BLACK);
+                                set.setValueTextColor(Color.BLACK);
+                                set.setValueTextSize(11f);
+                                set.setDrawValues(true);
+
+                                Log.e(TAG, String.valueOf(date.size()));
+                                LineData data = new LineData(set);
+                                data.setValueFormatter(new LargeValueFormatter());
+                                mChart.getXAxis().setAxisMinimum(0f);
+                                mChart.getXAxis().setAxisMaximum(date.size());
+                                mChart.notifyDataSetChanged();
+                                mChart.setVisibleXRange(0f,6f);
+                                mChart.moveViewToX(data.getEntryCount() - 5);
+                                mChart.setData(data);
+                                mChart.animateY(500);
+                                mChart.invalidate();
+
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -189,7 +187,7 @@ public class Thermo_total extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("identi", "1@1.1");
-                params.put("babyname", "7");
+                params.put("babyname", "3");
 
 
                 return params;
@@ -200,38 +198,29 @@ public class Thermo_total extends AppCompatActivity {
 
     }
 
-
-    private LineDataSet createSet() {
-
-        LineDataSet set = new LineDataSet(null, "Temperature");
-        set.setAxisDependency(AxisDependency.LEFT);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            set.setCircleColor(getColor(R.color.temp));
-            set.setColor(getColor(R.color.temp));
-        }else{
-            set.setCircleColor(getResources().getColor(R.color.temp));
-            set.setColor(getResources().getColor(R.color.temp));
-        }
-        set.setLineWidth(2f);
-        set.setCircleRadius(4f);
-        set.setFillAlpha(65);
-        set.setFillColor(ColorTemplate.getHoloBlue());
-        set.setHighLightColor(Color.BLACK);
-        set.setValueTextColor(Color.BLACK);
-        set.setValueTextSize(11f);
-//        set.setCircleColorHole(Color.WHITE);
-        set.setDrawValues(true);
-        set.setValueTypeface(tfs);
-        return set;
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
+    }
+    public class LabelFormatter implements IAxisValueFormatter {
+        private final ArrayList<String> mLabels;
+        public LabelFormatter(ArrayList<String> labels) {
+            mLabels = labels;
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            // 2021. 02. 26 박준태 value 값이 date.size 크거나 음수면 빈 문자열 반환으로 x축 라벨에 출력 안함
+            if (value < 0 || value >= mLabels.size()){
+                Log.e("err",String.valueOf(value)+"end");
+                return "";
+            }
+            Log.e("value tag",String.valueOf(value)+"end");
+            return mLabels.get(Math.round(value)%mLabels.size());
+        }
     }
 }

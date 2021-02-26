@@ -11,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mpchartsample.BoomcareSample.Bottle_total;
 import com.example.mpchartsample.BoomcareSample.Nappy_total;
 import com.example.mpchartsample.BoomcareSample.Physical_check;
+import com.example.mpchartsample.BoomcareSample.Thermo_day;
 import com.example.mpchartsample.BoomcareSample.Thermo_total;
 import com.example.mpchartsample.example.LineChartActivity;
 import com.example.mpchartsample.example.PieChartActivity;
 import com.example.mpchartsample.example.RadarChartActivity;
-import com.github.mikephil.charting.charts.LineChart;
 
 public class SampleActivity extends AppCompatActivity {
     Button btnBottleChart, btnTempChart, btnTempTotalChart, btnSleepChart, btnNappyChart, btnPhysicalChart, btnCompareChart;
@@ -44,7 +44,7 @@ public class SampleActivity extends AppCompatActivity {
         btnTempChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SampleActivity.this, LineChartActivity.class);
+                Intent intent = new Intent(SampleActivity.this, Thermo_day.class);
                 startActivity(intent);
             }
         });
