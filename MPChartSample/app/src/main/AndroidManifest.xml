@@ -27,6 +27,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".BoomcareSample.BottleChart"/>
         <activity android:name=".BoomcareSample.Bottle_total"/>
+        <activity android:name=".BoomcareSample.Nappy_total"/>
     </application>
 
 </manifest>

@@ -14,4 +14,6 @@
     <color name="total">#A1A2FF</color>
     <color name="bottle">#6268be</color>
     <color name="milk">#8bbb4b</color>
+    <color name="nappy_so">#efb831</color>
+    <color name="nappy_dae">#fb8561</color>
 </resources>
