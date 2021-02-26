@@ -173,8 +173,6 @@ public class Bottle_total extends AppCompatActivity {
 
 
                             XAxis xl = mChart.getXAxis();
-                            xl.setGranularityEnabled(true);
-                            xl.setGranularity(0);
                             xl.setDrawAxisLine(false);
                             xl.setDrawGridLines(false);
                             xl.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -257,7 +255,7 @@ public class Bottle_total extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("identi", "1@1.1");
-                params.put("babyname", "0");
+                params.put("babyname", "6");
                 return params;
             }
         };
@@ -284,13 +282,13 @@ public class Bottle_total extends AppCompatActivity {
         }
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            // 2021. 02. 26 박준태 value 값이 date.size 크거나 음수면 빈 문자열 반환으로 x축 라벨에 출력 안함
-            if (value < 0 || value >= date.size()){
+            // 2021. 02. 26 박준태 value 값이 mLabels.size 보다 크거나 음수면 빈 문자열 반환으로 x축 라벨에 출력 안함
+            if (value < 0 || value >= mLabels.size()){
                 Log.e("err",String.valueOf(value)+"end");
                 return "";
             }
             Log.e("value tag",String.valueOf(value)+"end");
-            return mLabels.get(Math.round(value)%date.size());
+            return mLabels.get(Math.round(value)%mLabels.size());
         }
     }
 

@@ -60,7 +60,7 @@ public class SampleActivity extends AppCompatActivity {
         btnPhysicalChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SampleActivity.this, RadarChartActivity.class);
+                Intent intent = new Intent(SampleActivity.this, Physical_check.class);
                 startActivity(intent);
             }
         });
