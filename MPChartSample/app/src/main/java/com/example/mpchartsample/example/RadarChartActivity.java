@@ -1,12 +1,12 @@
-package com.example.mpchartsample;
+package com.example.mpchartsample.example;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mpchartsample.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.Legend;

@@ -1,10 +1,11 @@
-package com.example.mpchartsample;
+package com.example.mpchartsample.example;
 
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mpchartsample.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;

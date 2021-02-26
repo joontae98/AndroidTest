@@ -14,11 +14,27 @@
         android:layout_height="wrap_content"
         android:text="BottleChart"/>
 
-    <Button
-        android:id="@+id/btn_sample_tempChart"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TempChart"/>
+        android:gravity="center"
+        android:weightSum="10">
+        <Button
+            android:id="@+id/btn_sample_tempChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TempChart"/>
+        <Space
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_sample_tempTotalChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TempToTalChart"/>
+
+    </LinearLayout>
     <Button
         android:id="@+id/btn_sample_sleepChart"
         android:layout_width="wrap_content"

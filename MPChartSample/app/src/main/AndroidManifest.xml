@@ -12,23 +12,23 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MPChartSample">
-        <activity android:name=".BoomcareSample.SampleActivity">
+        <activity android:name=".SampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BarChartActivity"/>
-        <activity android:name=".LineChartActivity"/>
-        <activity android:name=".PieChartActivity"/>
-        <activity android:name=".RadarChartActivity"/>
-        <activity android:name=".TestActivity"/>
+        <activity android:name=".example.BarChartActivity"/>
+        <activity android:name=".example.LineChartActivity"/>
+        <activity android:name=".example.PieChartActivity"/>
+        <activity android:name=".example.RadarChartActivity"/>
+        <activity android:name=".example.TestActivity"/>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".BoomcareSample.BottleChart"/>
         <activity android:name=".BoomcareSample.Bottle_total"/>
         <activity android:name=".BoomcareSample.Nappy_total"/>
         <activity android:name=".BoomcareSample.Physical_check"/>
+        <activity android:name=".BoomcareSample.Thermo_total"/>
     </application>
 
 </manifest>
