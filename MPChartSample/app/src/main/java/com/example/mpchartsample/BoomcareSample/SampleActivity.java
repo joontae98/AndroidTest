@@ -11,9 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mpchartsample.PieChartActivity;
 import com.example.mpchartsample.R;
 import com.example.mpchartsample.RadarChartActivity;
+import com.github.mikephil.charting.data.RadarData;
 
 public class SampleActivity extends AppCompatActivity {
-    Button btnBottleChart, btnTempChart, btnSleepChart, btnNappyChart, btnPhysicalChart;
+    Button btnBottleChart, btnTempChart, btnSleepChart, btnNappyChart, btnPhysicalChart, btnCompareChart;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class SampleActivity extends AppCompatActivity {
         btnSleepChart = (Button) findViewById(R.id.btn_sample_sleepChart);
         btnNappyChart = (Button) findViewById(R.id.btn_sample_nappyChart);
         btnPhysicalChart = (Button) findViewById(R.id.btn_sample_physicalChart);
+        btnCompareChart = (Button) findViewById(R.id.btn_sample_compareChart);
 
         btnBottleChart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +63,14 @@ public class SampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SampleActivity.this, Physical_check.class);
+                startActivity(intent);
+            }
+        });
+
+        btnCompareChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SampleActivity.this, RadarChartActivity.class);
                 startActivity(intent);
             }
         });

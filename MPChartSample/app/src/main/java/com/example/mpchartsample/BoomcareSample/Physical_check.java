@@ -1,10 +1,12 @@
 package com.example.mpchartsample.BoomcareSample;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,6 +29,7 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,8 +86,8 @@ public class Physical_check extends AppCompatActivity {
         } else {
             leftAxis.setTextColor(getResources().getColor(R.color.height));
         }
-        leftAxis.setAxisMaxValue(120f);
-        leftAxis.setAxisMinValue(40f);
+        leftAxis.setAxisMaximum(120f);
+        leftAxis.setAxisMinimum(40f);
         leftAxis.setDrawGridLines(false);
 
         YAxis rightAxis = mChart.getAxisRight();
@@ -93,8 +96,8 @@ public class Physical_check extends AppCompatActivity {
         } else {
             rightAxis.setTextColor(getResources().getColor(R.color.weight));
         }
-        rightAxis.setAxisMaxValue(24f);
-        rightAxis.setAxisMinValue(2f);
+        rightAxis.setAxisMaximum(24f);
+        rightAxis.setAxisMinimum(2f);
         rightAxis.setDrawGridLines(false);
 
 
@@ -136,7 +139,7 @@ public class Physical_check extends AppCompatActivity {
 
                             }
 
-                            BarData data = new BarData();
+
                             ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
                             ArrayList<BarEntry> yVals2 = new ArrayList<BarEntry>();
 
@@ -172,18 +175,19 @@ public class Physical_check extends AppCompatActivity {
                                 set1.setAxisDependency(YAxis.AxisDependency.LEFT);
                                 set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
 
-                                data.addDataSet(set1);
-                                data.addDataSet(set2);
+                                BarData data = new BarData(set1,set2);
 
                                 data.setValueTextSize(10f);
                                 data.setBarWidth(barWidth);
 
+                                mChart.getXAxis().setAxisMinimum(0);
+                                mChart.getXAxis().setAxisMaximum(date.size());
                                 mChart.setData(data);
                                 mChart.setFitBars(true);
                                 mChart.groupBars(0f, groupSpace, barSpace);
                                 mChart.setVisibleXRange(0f, 6f);
 
-//                                mChart.moveViewToX(data.getXValCount() * 3 - 19); // 2021. 02. 23 박준태 그래프에 마지막 데이터 나오도록 수정
+                                mChart.moveViewToX(data.getEntryCount() - 5); // 2021. 02. 23 박준태 그래프에 마지막 데이터 나오도록 수정
                                 mChart.animateY(500);
                                 mChart.invalidate();
                             }
@@ -204,7 +208,7 @@ public class Physical_check extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("identi", "1@1.1");
-                params.put("babyname", "1");
+                params.put("babyname", "7");
                 return params;
             }
         };

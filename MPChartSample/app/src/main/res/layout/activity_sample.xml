@@ -37,4 +37,10 @@
         android:layout_height="wrap_content"
         android:text="PhysicalChart"/>
 
+    <Button
+        android:id="@+id/btn_sample_compareChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CompareChart"/>
+
 </LinearLayout>

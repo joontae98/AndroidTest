@@ -28,7 +28,7 @@ public class LargeValueFormatter implements IValueFormatter, IAxisValueFormatter
     private String mText = "";
 
     public LargeValueFormatter() {
-        mFormat = new DecimalFormat("###E00");
+        mFormat = new DecimalFormat("##0");
     }
 
     /**
@@ -84,11 +84,7 @@ public class LargeValueFormatter implements IValueFormatter, IAxisValueFormatter
 
         String r = mFormat.format(number);
 
-        int numericValue1 = Character.getNumericValue(r.charAt(r.length() - 1));
-        int numericValue2 = Character.getNumericValue(r.charAt(r.length() - 2));
-        int combined = Integer.valueOf(numericValue2 + "" + numericValue1);
-
-        r = r.replaceAll("E[0-9][0-9]", mSuffix[combined / 3]);
+        r = r.replaceAll("E[0-9]", mSuffix[Character.getNumericValue(r.charAt(r.length() - 1)) / 3]);
 
         while (r.length() > mMaxLength || r.matches("[0-9]+\\.[a-z]")) {
             r = r.substring(0, r.length() - 2) + r.substring(r.length() - 1);
