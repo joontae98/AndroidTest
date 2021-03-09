@@ -27,6 +27,7 @@ public class Sum {
         if (myCallback != null) {
             if (number >= maxNumber) {
                 myCallback.onMaxNumber(number,number-maxNumber);
+                System.out.println("sum");
             }
         }
         return number;

@@ -17,6 +17,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onMaxNumber(int number, int exceed) {
                 System.out.println("Current sum is " + number + " and exceeds " + exceed);
+                try {
+                    new Thread().sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         };
 

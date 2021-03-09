@@ -1,5 +1,7 @@
 package com.example.callbacktest;
 
+import android.util.Log;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -18,6 +20,7 @@ public class ExampleUnitTest {
             @Override
             public void onMaxNumber(int number, int exceed) {
                 System.out.println("Current sum is " + number + " and exceeds " + exceed);
+                isd();
             }
         };
 
@@ -28,5 +31,14 @@ public class ExampleUnitTest {
             total.addNumber(i);
         }
         System.out.println("Total is "+ total.getTotal());
+    }
+    @Test
+    public void isd() {
+        try {
+            new Thread().sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("1234");
     }
 }
