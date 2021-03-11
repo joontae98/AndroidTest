@@ -1,5 +1,7 @@
 package com.example.mvpsample.contract;
 
+import android.view.View;
+
 public interface LoginContract {
     interface View {
         void showToast(String title);
