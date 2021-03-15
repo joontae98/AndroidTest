@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,12 +25,11 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
+    private static final String TAG = "LoginActivity";
     //binding 변수 생성
     ActivityLoginBinding binding;
     private LoginPresenter mPresenter;
     Bitmap bitmap;
-//    private EditText etxId, etxPw;
-//    private Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mPresenter.setView(this);
     }
 
-//    private void init() {
-//        etxId = (EditText) findViewById(R.id.etx_login_id);
-//        etxPw = (EditText) findViewById(R.id.etx_login_pw);
-//        btnLogin = (Button) findViewById(R.id.btn_login);
-//    }
 
     @Override
     public void showToast(String title) {
@@ -53,12 +48,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     public void onButtonClick(View view) {
-        mPresenter.doLogin(binding.etxLoginId.getText().toString(), binding.etxLoginPw.getText().toString());
+        Log.e(TAG, "start");
+//        mPresenter.doLogin(binding.etxLoginId.getText().toString(), binding.etxLoginPw.getText().toString());
+        String address = "http://192.168.0.113:4000/"+binding.etxLoginId.getText().toString();
         Thread mThread = new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("https://i.imgur.com/JAkQFJj.png");
+                    URL url = new URL(address);
                     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                     conn.setDoInput(true);
                     conn.connect();
@@ -77,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         try {
             mThread.join();
             binding.imgLogin.setImageBitmap(bitmap);
+            Log.e(TAG,"end");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
