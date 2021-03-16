@@ -1,10 +1,8 @@
 package com.example.mvpsample;
 
-import com.example.mvpsample.presenter.LoginPresenter;
+import com.example.mvpsample.login.LoginPresenter;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

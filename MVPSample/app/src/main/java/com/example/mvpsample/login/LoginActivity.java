@@ -1,4 +1,4 @@
-package com.example.mvpsample.view;
+package com.example.mvpsample.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -8,14 +8,12 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mvpsample.R;
-import com.example.mvpsample.contract.LoginContract;
+import com.example.mvpsample.login.LoginContract;
 import com.example.mvpsample.databinding.ActivityLoginBinding;
-import com.example.mvpsample.presenter.LoginPresenter;
+import com.example.mvpsample.login.LoginPresenter;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="test"
-            type="com.example.mvpsample.TestActivity"
+            name="img"
+            type="com.example.mvpsample.img.ImgActivity"
             />
     </data>
     <RelativeLayout
@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/img_test"
+                android:id="@+id/img_img"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
             <LinearLayout
@@ -28,19 +28,19 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/btn_test_upload"
+                    android:id="@+id/btn_img_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Upload Image" />
                 <Button
-                    android:id="@+id/btn_test_download"
+                    android:id="@+id/btn_img_download"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Download Image" />
                 <Button
-                    android:id="@+id/btn_test_delete"
+                    android:id="@+id/btn_img_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

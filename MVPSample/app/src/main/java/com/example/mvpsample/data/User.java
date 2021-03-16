@@ -1,4 +1,4 @@
-package com.example.mvpsample.model;
+package com.example.mvpsample.data;
 
 import java.util.ArrayList;
 

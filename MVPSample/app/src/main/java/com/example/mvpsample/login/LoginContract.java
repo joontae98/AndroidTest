@@ -1,6 +1,4 @@
-package com.example.mvpsample.contract;
-
-import android.view.View;
+package com.example.mvpsample.login;
 
 public interface LoginContract {
     interface View {
