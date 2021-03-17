@@ -23,17 +23,13 @@ import com.example.mvpsample.data.img.source.ImageRepository;
 import com.example.mvpsample.databinding.ActivityImgBinding;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class ImgActivity extends AppCompatActivity implements ImageContract.View {
     ActivityImgBinding binding;
     private Bitmap bitmap;
     private ImagePresenter presenter;
     private ImageRepository repository;
-    private String name = "1234.jpg";
+    private String name = "img21.jpg";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,17 +42,22 @@ public class ImgActivity extends AppCompatActivity implements ImageContract.View
         binding.btnImgUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // presenter.imgupload()
                 checkPermission();
             }
         });
 
         binding.btnImgDownload.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 presenter.downloadImage();
+            }
+        });
+
+        binding.btnImgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.deleteImage();
             }
         });
     }

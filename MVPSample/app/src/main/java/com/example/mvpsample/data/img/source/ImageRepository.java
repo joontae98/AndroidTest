@@ -39,4 +39,19 @@ public class ImageRepository implements ImageDataSource {
             }
         });
     }
+
+    @Override
+    public void deleteImage(imgCallback callback) {
+        imageRemoteDataSource.deleteImage(new imgCallback() {
+            @Override
+            public void onMessage(String str) {
+                callback.onMessage(str);
+            }
+
+            @Override
+            public void getImage(Image image) {
+
+            }
+        });
+    }
 }

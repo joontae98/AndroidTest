@@ -1,8 +1,5 @@
 package com.example.mvpsample.login;
 
-import com.example.mvpsample.login.LoginContract;
-import com.example.mvpsample.data.User;
-
 public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.View view;
     private User user;

@@ -16,5 +16,7 @@ public interface ImageContract {
 
         void downloadImage();
 
+        void deleteImage();
+
     }
 }

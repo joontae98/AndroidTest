@@ -14,4 +14,6 @@ public interface ImageDataSource {
      void uploadImage(Image image, imgCallback callback);
 
      void downloadImage(imgCallback callback);
+
+     void deleteImage(imgCallback callback);
 }

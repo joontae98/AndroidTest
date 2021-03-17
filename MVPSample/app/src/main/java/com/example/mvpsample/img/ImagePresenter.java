@@ -43,4 +43,19 @@ public class ImagePresenter implements ImageContract.Presenter{
 
     }
 
+    @Override
+    public void deleteImage() {
+        repository.deleteImage(new ImageDataSource.imgCallback() {
+            @Override
+            public void onMessage(String str) {
+                view.showToast(str);
+            }
+
+            @Override
+            public void getImage(Image image) {
+
+            }
+        });
+    }
+
 }

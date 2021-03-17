@@ -10,9 +10,13 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mvpsample.VolleyMultipartRequest;
 import com.example.mvpsample.data.img.Image;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -56,12 +60,13 @@ public class ImageRemoteDataSource implements ImageDataSource {
                 return params;
             }
         };
+        volleyMultipartRequest.setShouldCache(false);
         Volley.newRequestQueue(context).add(volleyMultipartRequest);
     }
 
     @Override
     public void downloadImage(imgCallback callback) {
-        String name = "img.jpg";
+        String name = "img21.jpg";
         String address = "http://192.168.0.113:3232/process/"+name;
         Thread mThread = new Thread() {
             @Override
@@ -91,6 +96,30 @@ public class ImageRemoteDataSource implements ImageDataSource {
         callback.getImage(image);
     }
 
+    @Override
+    public void deleteImage(imgCallback callback) {
+        String address = "http://192.168.0.113:3232/process/Delete/img21.jpg";
+        StringRequest request = new StringRequest(Request.Method.POST, address, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    callback.onMessage(object.getString("result"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("GotError",""+error.getMessage());
+            }
+        });
+        request.setShouldCache(false);
+        Volley.newRequestQueue(context).add(request);
+    }
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);

@@ -1,4 +1,4 @@
-package com.example.mvpsample.data;
+package com.example.mvpsample.login;
 
 import java.util.ArrayList;
 
